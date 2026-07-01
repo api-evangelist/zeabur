@@ -1,0 +1,151 @@
+aid: zeabur
+url: https://raw.githubusercontent.com/api-evangelist/zeabur/refs/heads/main/apis.yml
+name: Zeabur
+kind: company
+description: Zeabur is a deploy-anything cloud platform (PaaS) that ships applications,
+  databases, and services with one click. Its public API is GraphQL-first, exposing
+  projects, environments, services, deployments, environment variables, domains, regions,
+  and templates through a single endpoint at https://api.zeabur.com/graphql.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- PaaS
+- Deployment
+- Cloud
+- DevOps
+- GraphQL
+created: '2026-07-01'
+modified: '2026-07-01'
+specificationVersion: '0.19'
+apis:
+- aid: zeabur:zeabur-projects-api
+  name: Zeabur Projects API
+  tags:
+  - Projects
+  - Environments
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://zeabur.com/docs/developer/public-api
+  baseURL: https://api.zeabur.com/graphql
+  properties:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+  - url: graphql/zeabur-graphql.md
+    type: GraphQL
+  - url: graphql/zeabur-schema.graphql
+    type: GraphQL
+  description: Create, list, clone, export, and delete projects, and manage the environments
+    (production, staging, etc.) within each project, via GraphQL queries and mutations.
+- aid: zeabur:zeabur-services-api
+  name: Zeabur Services API
+  tags:
+  - Services
+  - Git
+  - Docker
+  - Marketplace
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://zeabur.com/docs/developer/public-api
+  baseURL: https://api.zeabur.com/graphql
+  properties:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+  - url: graphql/zeabur-graphql.md
+    type: GraphQL
+  - url: graphql/zeabur-schema.graphql
+    type: GraphQL
+  description: Create services from git repositories, uploaded zips, Dockerfiles, or
+    prebuilt marketplace codes; restart, suspend, redeploy, update image tags, read
+    metrics/ports, and run commands inside running services.
+- aid: zeabur:zeabur-deployments-api
+  name: Zeabur Deployments API
+  tags:
+  - Deployments
+  - Builds
+  - Logs
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://zeabur.com/docs/developer/public-api
+  baseURL: https://api.zeabur.com/graphql
+  properties:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+  - url: https://zeabur.com/docs/developer/websocket-guide
+    type: Documentation
+  - url: graphql/zeabur-graphql.md
+    type: GraphQL
+  - url: graphql/zeabur-schema.graphql
+    type: GraphQL
+  description: List and inspect deployments for a service and environment, fetch the
+    latest deployment, read build and runtime logs, and stream logs in real time via
+    graphql-ws subscriptions.
+- aid: zeabur:zeabur-environment-variables-api
+  name: Zeabur Environment Variables API
+  tags:
+  - Environment Variables
+  - Configuration
+  - Secrets
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://zeabur.com/docs/developer/public-api
+  baseURL: https://api.zeabur.com/graphql
+  properties:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+  - url: graphql/zeabur-graphql.md
+    type: GraphQL
+  - url: graphql/zeabur-schema.graphql
+    type: GraphQL
+  description: List and update environment variables scoped to a service within an
+    environment, for injecting configuration and secrets into deployed workloads.
+- aid: zeabur:zeabur-domains-api
+  name: Zeabur Domains API
+  tags:
+  - Domains
+  - DNS
+  - Networking
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://zeabur.com/docs/developer/public-api
+  baseURL: https://api.zeabur.com/graphql
+  properties:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+  - url: graphql/zeabur-graphql.md
+    type: GraphQL
+  - url: graphql/zeabur-schema.graphql
+    type: GraphQL
+  description: Bind generated (*.zeabur.app) or custom domains to a service, list bound
+    domains, check domain availability, and remove domain bindings.
+- aid: zeabur:zeabur-templates-api
+  name: Zeabur Templates & Regions API
+  tags:
+  - Templates
+  - Marketplace
+  - Regions
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://zeabur.com/docs/developer/public-api
+  baseURL: https://api.zeabur.com/graphql
+  properties:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+  - url: graphql/zeabur-graphql.md
+    type: GraphQL
+  - url: graphql/zeabur-schema.graphql
+    type: GraphQL
+  description: List and retrieve deploy templates, deploy a template spec into a project,
+    create and update custom templates from spec YAML, and enumerate available deploy
+    regions (including generic bring-your-own-server regions).
+common:
+- type: GitHubOrganization
+  url: https://github.com/zeabur
+- type: LinkedIn
+  url: https://www.linkedin.com/company/zeabur
+- type: Website
+  url: https://zeabur.com/
+- type: Documentation
+  url: https://zeabur.com/docs
+- type: Plans
+  url: plans/zeabur-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/zeabur-rate-limits.yml
+- type: FinOps
+  url: finops/zeabur-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,162 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Zeabur
+providerId: zeabur
+created: '2026-07-01'
+modified: '2026-07-01'
+reconciled: false
+tags:
+- PaaS
+- Deployment
+- Cloud
+- DevOps
+- GraphQL
+- Plans
+description: >-
+  Zeabur combines subscription plan tiers with usage-based resource billing.
+  A free trial lets developers try the platform; the Developer plan is a
+  flat monthly subscription that unlocks deployments plus metered compute,
+  memory, and bandwidth; the Team plan adds collaboration and higher limits.
+  Underlying compute (vCPU / memory) and bandwidth are billed by usage on top
+  of the subscription. The public GraphQL API is available on paid plans via
+  an API key; there is no separate charge for API access itself.
+notes: >-
+  Plan names and prices reflect Zeabur's published pricing model; verify the
+  current tiers, quotas, and per-resource rates on the Zeabur pricing page at
+  reconciliation. Resource (compute/bandwidth) rates are usage-based and
+  subject to change.
+sources:
+- https://zeabur.com/pricing
+- https://zeabur.com/docs
+plans:
+- id: zeabur-free-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    Time- or credit-limited trial to explore Zeabur, deploy sample services,
+    and evaluate the platform before subscribing to a paid plan.
+  entries:
+  - label: Trial Access
+    name: trial_access
+    type: flat
+    metric: trial
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (trial credit / limited duration)
+    userMultiplied: false
+  elements:
+  - name: One-Click Deploy
+  - name: Prebuilt Marketplace Services
+  - name: Generated *.zeabur.app Domains
+- id: zeabur-developer
+  name: Developer
+  type: subscription
+  description: >-
+    Flat monthly subscription for individual developers. Unlocks unlimited
+    deployments, custom domains, and the public GraphQL API, with compute,
+    memory, and bandwidth billed by usage on top of the subscription fee.
+  entries:
+  - label: Developer Subscription
+    name: developer_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $5/mo
+    userMultiplied: false
+  - label: Compute (vCPU)
+    name: compute_vcpu
+    type: usage
+    metric: vcpu_hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: usage-based per vCPU-hour
+    userMultiplied: false
+  - label: Memory
+    name: memory_gb
+    type: usage
+    metric: gb_hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: usage-based per GB-hour
+    userMultiplied: false
+  - label: Bandwidth
+    name: bandwidth_gb
+    type: usage
+    metric: gb
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: usage-based per GB egress
+    userMultiplied: false
+  elements:
+  - name: Unlimited Deployments
+  - name: Custom Domains
+  - name: Public GraphQL API + API Keys
+  - name: Build & Runtime Logs
+- id: zeabur-team
+  name: Team
+  type: subscription
+  description: >-
+    Subscription for teams that adds shared projects, team roles/access
+    control, and higher limits, with the same usage-based compute, memory,
+    and bandwidth billing on top of the plan.
+  entries:
+  - label: Team Subscription
+    name: team_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: see Zeabur pricing page
+    userMultiplied: true
+  - label: Compute (vCPU)
+    name: compute_vcpu
+    type: usage
+    metric: vcpu_hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: usage-based per vCPU-hour
+    userMultiplied: false
+  - label: Memory
+    name: memory_gb
+    type: usage
+    metric: gb_hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: usage-based per GB-hour
+    userMultiplied: false
+  - label: Bandwidth
+    name: bandwidth_gb
+    type: usage
+    metric: gb
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: usage-based per GB egress
+    userMultiplied: false
+  elements:
+  - name: Team Members & Roles
+  - name: Shared Projects
+  - name: Priority Support
+  - name: Public GraphQL API + API Keys
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

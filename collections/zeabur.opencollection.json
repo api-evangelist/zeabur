@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Zeabur GraphQL API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query ListProjects($limit: Int) { projects(limit: $limit) { edges { node { _id name region { id name } } } pageInfo { hasNextPage endCursor } } }\",\"variables\":{\"limit\":20}}"
+            }
+          },
+          "docs": "List projects for the authenticated owner."
+        },
+        {
+          "info": {
+            "name": "Create project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CreateProject($region: String!, $name: String!) { createProject(region: $region, name: $name) { _id name } }\",\"variables\":{\"region\":\"sfo1\",\"name\":\"my-project\"}}"
+            }
+          },
+          "docs": "Create a new project in a region."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Services",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create service from git",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CreateService($projectID: ObjectID!, $name: String!, $repoID: Int!, $branchName: String!) { createService(projectID: $projectID, name: $name, repoID: $repoID, branchName: $branchName) { _id name template } }\",\"variables\":{\"projectID\":\"<PROJECT_ID>\",\"name\":\"api\",\"repoID\":123456,\"branchName\":\"main\"}}"
+            }
+          },
+          "docs": "Create a service from a git repository."
+        },
+        {
+          "info": {
+            "name": "Redeploy service",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation Redeploy($id: ObjectID!, $environmentID: ObjectID!) { redeployService(id: $id, environmentID: $environmentID) { _id status } }\",\"variables\":{\"id\":\"<SERVICE_ID>\",\"environmentID\":\"<ENV_ID>\"}}"
+            }
+          },
+          "docs": "Trigger a redeploy of a service."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query Deployments($serviceID: ObjectID!, $environmentID: ObjectID!) { deployments(serviceID: $serviceID, environmentID: $environmentID) { edges { node { _id status createdAt } } } }\",\"variables\":{\"serviceID\":\"<SERVICE_ID>\",\"environmentID\":\"<ENV_ID>\"}}"
+            }
+          },
+          "docs": "List deployments for a service within an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Environment Variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation UpdateVariables($serviceID: ObjectID!, $environmentID: ObjectID!, $data: [VariableInput!]!) { updateVariables(serviceID: $serviceID, environmentID: $environmentID, data: $data) { key value } }\",\"variables\":{\"serviceID\":\"<SERVICE_ID>\",\"environmentID\":\"<ENV_ID>\",\"data\":[{\"key\":\"NODE_ENV\",\"value\":\"production\"}]}}"
+            }
+          },
+          "docs": "Create or update environment variables for a service."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation AddDomain($serviceID: ObjectID!, $environmentID: ObjectID!, $domain: String!) { addDomain(serviceID: $serviceID, environmentID: $environmentID, isGenerated: false, domain: $domain) { _id domain status } }\",\"variables\":{\"serviceID\":\"<SERVICE_ID>\",\"environmentID\":\"<ENV_ID>\",\"domain\":\"app.example.com\"}}"
+            }
+          },
+          "docs": "Bind a custom domain to a service."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deploy template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.zeabur.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation DeployTemplate($rawSpecYaml: String!, $projectID: ObjectID) { deployTemplate(rawSpecYaml: $rawSpecYaml, projectID: $projectID) { _id name } }\",\"variables\":{\"rawSpecYaml\":\"<TEMPLATE_YAML>\",\"projectID\":\"<PROJECT_ID>\"}}"
+            }
+          },
+          "docs": "Deploy a template spec into a project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

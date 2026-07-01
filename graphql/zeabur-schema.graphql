@@ -1,0 +1,441 @@
+"""
+Zeabur GraphQL Schema
+Representative schema of the real Zeabur public GraphQL API.
+
+Endpoint:      https://api.zeabur.com/graphql
+Subscriptions: wss://api.zeabur.com/graphql (graphql-ws protocol)
+Auth:          Authorization: Bearer {API_TOKEN}
+
+Covers the real, documented surfaces of the Zeabur deploy-anything PaaS:
+projects, services, deployments, environments, environment variables,
+domains, regions, templates, logs, and the authenticated user/teams.
+
+This SDL is a faithful, hand-authored representation derived from the
+Zeabur Public API docs (https://zeabur.com/docs/developer/public-api),
+the Apollo Explorer schema, and the zeabur/cli Go API client. Exact field
+sets can evolve; consult the Apollo Explorer "Schema -> SDL" for the
+canonical, always-current definition.
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar ObjectID
+scalar DateTime
+scalar JSON
+scalar Upload
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum ServiceStatus {
+  RUNNING
+  DEPLOYING
+  BUILDING
+  CRASHED
+  SUSPENDED
+  UNKNOWN
+}
+
+enum ServiceTemplate {
+  GIT
+  PREBUILT
+  DOCKERFILE
+  GIT_DOCKERFILE
+}
+
+enum DeploymentStatus {
+  BUILDING
+  DEPLOYING
+  RUNNING
+  FAILED
+  SUSPENDED
+}
+
+enum DomainStatus {
+  PENDING
+  VERIFYING
+  ACTIVE
+  FAILED
+}
+
+enum MetricType {
+  CPU
+  MEMORY
+  NETWORK
+}
+
+enum LogType {
+  BUILD
+  RUNTIME
+}
+
+enum RegionProvider {
+  AWS
+  GCP
+  ALIYUN
+  TENCENT
+}
+
+# ─────────────────────────────────────────────
+# Core Entity Types
+# ─────────────────────────────────────────────
+
+type User {
+  _id: ObjectID!
+  username: String!
+  name: String
+  email: String
+  avatar: String
+  createdAt: DateTime!
+}
+
+type Team {
+  _id: ObjectID!
+  name: String!
+  createdAt: DateTime!
+  members: [TeamMember!]!
+}
+
+type TeamMember {
+  user: User!
+  role: String!
+}
+
+type Region {
+  id: String!
+  name: String!
+  provider: RegionProvider!
+  city: String
+  country: String
+  continent: String
+  generic: Boolean!
+}
+
+type Project {
+  _id: ObjectID!
+  name: String!
+  owner: User
+  region: Region
+  environments: [Environment!]!
+  services: [Service!]!
+  createdAt: DateTime!
+}
+
+type ProjectConnection {
+  edges: [ProjectEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProjectEdge {
+  node: Project!
+  cursor: String!
+}
+
+type Environment {
+  _id: ObjectID!
+  name: String!
+  projectID: ObjectID!
+  createdAt: DateTime!
+}
+
+type Service {
+  _id: ObjectID!
+  name: String!
+  projectID: ObjectID!
+  template: ServiceTemplate!
+  status(environmentID: ObjectID!): ServiceStatus!
+  gitRepoID: Int
+  branchName: String
+  marketplaceCode: String
+  domains(environmentID: ObjectID!): [Domain!]!
+  ports(environmentID: ObjectID!): [ServicePort!]!
+  createdAt: DateTime!
+}
+
+type ServiceConnection {
+  edges: [ServiceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ServiceEdge {
+  node: Service!
+  cursor: String!
+}
+
+type ServicePort {
+  name: String!
+  port: Int!
+  type: String!
+}
+
+type Deployment {
+  _id: ObjectID!
+  serviceID: ObjectID!
+  environmentID: ObjectID!
+  status: DeploymentStatus!
+  planMeta: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type DeploymentConnection {
+  edges: [DeploymentEdge!]!
+  pageInfo: PageInfo!
+}
+
+type DeploymentEdge {
+  node: Deployment!
+  cursor: String!
+}
+
+type Variable {
+  key: String!
+  value: String!
+}
+
+type Domain {
+  _id: ObjectID!
+  domain: String!
+  serviceID: ObjectID!
+  environmentID: ObjectID!
+  isGenerated: Boolean!
+  redirectTo: String
+  status: DomainStatus!
+  createdAt: DateTime!
+}
+
+type DomainAvailability {
+  domain: String!
+  available: Boolean!
+}
+
+type Template {
+  code: String!
+  name: String!
+  description: String
+  iconURL: String
+  rawSpec: String!
+  variables: [TemplateVariable!]
+  createdAt: DateTime!
+}
+
+type TemplateVariable {
+  key: String!
+  name: String
+  description: String
+  defaultValue: String
+}
+
+type TemplateConnection {
+  edges: [TemplateEdge!]!
+  pageInfo: PageInfo!
+}
+
+type TemplateEdge {
+  node: Template!
+  cursor: String!
+}
+
+type LogEntry {
+  timestamp: DateTime!
+  message: String!
+  type: LogType!
+}
+
+type MetricPoint {
+  timestamp: DateTime!
+  value: Float!
+}
+
+type ServiceMetric {
+  type: MetricType!
+  points: [MetricPoint!]!
+}
+
+type CommandResult {
+  exitCode: Int!
+  output: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+input VariableInput {
+  key: String!
+  value: String!
+}
+
+input DomainOptionsInput {
+  redirectTo: String
+  region: String
+}
+
+input RepoConfigInput {
+  repoID: Int!
+  branchName: String!
+}
+
+# ─────────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────────
+
+type Query {
+  "The currently authenticated user."
+  me: User!
+
+  "List teams the authenticated user belongs to."
+  teams: [Team!]!
+
+  "List available deploy regions."
+  regions: [Region!]!
+
+  "List generic (bring-your-own-server) regions."
+  genericRegions: [Region!]!
+
+  "List projects owned by the given owner, paginated."
+  projects(ownerID: ObjectID, skip: Int, limit: Int): ProjectConnection!
+
+  "Retrieve a single project by ID, or by owner + name."
+  project(id: ObjectID, ownerName: String, name: String): Project
+
+  "List environments in a project."
+  environments(projectID: ObjectID!): [Environment!]!
+
+  "Retrieve a single environment by ID."
+  environment(id: ObjectID!): Environment
+
+  "List services in a project, paginated."
+  services(projectID: ObjectID!, skip: Int, limit: Int): ServiceConnection!
+
+  "Retrieve a single service by ID, or by owner + project + name."
+  service(id: ObjectID, ownerName: String, projectName: String, name: String): Service
+
+  "List deployments for a service within an environment."
+  deployments(serviceID: ObjectID!, environmentID: ObjectID!, perPage: Int): DeploymentConnection!
+
+  "Retrieve a single deployment by ID."
+  deployment(id: ObjectID!): Deployment
+
+  "Get the latest deployment for a service in an environment."
+  latestDeployment(serviceID: ObjectID!, environmentID: ObjectID!): Deployment
+
+  "List environment variables for a service in an environment."
+  variables(serviceID: ObjectID!, environmentID: ObjectID!): [Variable!]!
+
+  "List domains bound to a service in an environment."
+  domains(serviceID: ObjectID!, environmentID: ObjectID!): [Domain!]!
+
+  "Check whether a domain (generated or custom) is available."
+  checkDomainAvailable(domain: String!, isGenerated: Boolean!, region: String): DomainAvailability!
+
+  "List marketplace / prebuilt templates, paginated."
+  templates(skip: Int, limit: Int): TemplateConnection!
+
+  "Retrieve a single template by its code."
+  template(code: String!): Template
+
+  "Fetch build logs for a deployment."
+  buildLogs(deploymentID: ObjectID!): [LogEntry!]!
+
+  "Fetch runtime logs for a service deployment."
+  runtimeLogs(serviceID: ObjectID!, environmentID: ObjectID!, deploymentID: ObjectID): [LogEntry!]!
+
+  "Fetch a resource-usage metric for a service."
+  serviceMetric(
+    serviceID: ObjectID!
+    projectID: ObjectID!
+    environmentID: ObjectID!
+    metricType: MetricType!
+    startTime: DateTime!
+    endTime: DateTime!
+  ): ServiceMetric!
+}
+
+# ─────────────────────────────────────────────
+# Mutation Root
+# ─────────────────────────────────────────────
+
+type Mutation {
+  "Create a new project in a region."
+  createProject(ownerID: ObjectID, region: String!, name: String!): Project!
+
+  "Delete a project."
+  deleteProject(id: ObjectID!): Boolean!
+
+  "Export a project + environment as a template spec (YAML)."
+  exportProject(id: ObjectID!, environmentID: ObjectID!): String!
+
+  "Clone a project into a target region."
+  cloneProject(projectID: ObjectID!, environmentID: ObjectID!, targetRegion: String!, suspendOldProject: Boolean): Project!
+
+  "Create a service from a git repository."
+  createService(projectID: ObjectID!, name: String!, repoID: Int!, branchName: String!): Service!
+
+  "Create an empty service."
+  createEmptyService(projectID: ObjectID!, name: String!): Service!
+
+  "Create a prebuilt service from a marketplace code."
+  createPrebuiltService(projectID: ObjectID!, marketplaceCode: String!): Service!
+
+  "Upload a zip archive as the source of a service and deploy it."
+  uploadZipToService(projectID: ObjectID!, serviceID: ObjectID!, environmentID: ObjectID!, zip: Upload!): Deployment!
+
+  "Delete a service."
+  deleteService(id: ObjectID!): Boolean!
+
+  "Restart a running service."
+  restartService(id: ObjectID!, environmentID: ObjectID!): Boolean!
+
+  "Trigger a redeploy of a service."
+  redeployService(id: ObjectID!, environmentID: ObjectID!): Deployment!
+
+  "Suspend a service."
+  suspendService(id: ObjectID!, environmentID: ObjectID!): Boolean!
+
+  "Update the container image tag for a service."
+  updateImageTag(serviceID: ObjectID!, environmentID: ObjectID!, tag: String!): Boolean!
+
+  "Run a command inside a running service."
+  executeCommand(serviceID: ObjectID!, environmentID: ObjectID!, command: String!): CommandResult!
+
+  "Create or update environment variables for a service."
+  updateVariables(serviceID: ObjectID!, environmentID: ObjectID!, data: [VariableInput!]!): [Variable!]!
+
+  "Bind a domain (generated or custom) to a service."
+  addDomain(serviceID: ObjectID!, environmentID: ObjectID!, isGenerated: Boolean!, domain: String!, options: DomainOptionsInput): Domain!
+
+  "Remove a domain binding."
+  removeDomain(domain: String!): Boolean!
+
+  "Deploy a template spec into a project."
+  deployTemplate(rawSpecYaml: String!, variables: JSON, repoConfigs: [RepoConfigInput!], projectID: ObjectID): Project!
+
+  "Create a custom template from a spec YAML file."
+  createTemplateFromFile(rawSpecYaml: String!): Template!
+
+  "Update a custom template by code from a spec YAML file."
+  updateTemplateFromFile(code: String!, rawSpecYaml: String!): Template!
+}
+
+# ─────────────────────────────────────────────
+# Subscription Root  (graphql-ws over wss://api.zeabur.com/graphql)
+# ─────────────────────────────────────────────
+
+type Subscription {
+  "Stream build logs for a deployment as they are produced."
+  buildLogReceived(projectID: ObjectID!, deploymentID: ObjectID!): LogEntry!
+
+  "Stream runtime logs for a service deployment."
+  runtimeLogReceived(projectID: ObjectID!, serviceID: ObjectID!, environmentID: ObjectID!, deploymentID: ObjectID): LogEntry!
+}

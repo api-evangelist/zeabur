@@ -1,0 +1,92 @@
+aid: zeabur
+name: Zeabur
+review:
+  question: Does Zeabur expose a documented public WebSocket API?
+  answer: true
+  date: '2026-07-01'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Zeabur's public API is GraphQL-first. In addition to the HTTP GraphQL
+    endpoint, Zeabur documents a WebSocket endpoint (wss://api.zeabur.com/graphql)
+    that carries GraphQL subscriptions over the graphql-ws protocol for
+    real-time build and runtime log streaming. No standalone AsyncAPI
+    document was authored in this pass; the subscription surface is captured
+    in the GraphQL schema (Subscription root) at graphql/zeabur-schema.graphql
+    and described in graphql/zeabur-graphql.md.
+findings:
+  summary: |
+    Zeabur publishes a documented public API that is GraphQL-first, served at
+    https://api.zeabur.com/graphql and authenticated with a Bearer API token.
+    It DOES document a WebSocket surface: wss://api.zeabur.com/graphql speaks
+    the graphql-ws protocol and delivers GraphQL subscriptions, specifically
+    real-time build logs (buildLogReceived) and runtime logs
+    (runtimeLogReceived). There is no separate REST API and therefore no
+    OpenAPI artifact is provided; the GraphQL schema and markdown are the
+    canonical machine- and human-readable specs in this repository.
+  transports:
+    - protocol: GraphQL
+      scheme: https
+      baseURL: https://api.zeabur.com/graphql
+      documented: true
+      note: HTTP POST GraphQL endpoint for queries and mutations, Bearer-authenticated.
+    - protocol: WebSocket
+      scheme: wss
+      baseURL: wss://api.zeabur.com/graphql
+      documented: true
+      note: graphql-ws protocol carrying GraphQL subscriptions for real-time build and runtime log streaming.
+    - protocol: REST
+      scheme: https
+      documented: false
+      note: No documented REST surface; the platform's programmatic interface is GraphQL, so no OpenAPI is provided.
+  operationsConfirmed:
+    - query me
+    - query teams
+    - query regions / genericRegions
+    - query projects / project
+    - query environments / environment
+    - query services / service
+    - query deployments / latestDeployment / deployment
+    - query variables
+    - query domains / checkDomainAvailable
+    - query templates / template
+    - query buildLogs / runtimeLogs
+    - mutation createProject / deleteProject / cloneProject / exportProject
+    - mutation createService / createEmptyService / createPrebuiltService / uploadZipToService
+    - mutation restartService / redeployService / suspendService / updateImageTag / executeCommand
+    - mutation updateVariables
+    - mutation addDomain / removeDomain
+    - mutation deployTemplate / createTemplateFromFile / updateTemplateFromFile
+    - subscription buildLogReceived
+    - subscription runtimeLogReceived
+sources:
+  - url: https://zeabur.com/docs/developer/public-api
+    type: Documentation
+    note: Confirms GraphQL endpoint https://api.zeabur.com/graphql and Bearer auth.
+  - url: https://zeabur.com/docs/developer/use-api-key
+    type: Documentation
+    note: API key creation + Authorization Bearer header, with a curl GraphQL example.
+  - url: https://zeabur.com/docs/developer/websocket-guide
+    type: Documentation
+    note: Documents wss://api.zeabur.com/graphql graphql-ws WebSocket for subscriptions.
+  - url: https://studio.apollographql.com/public/zeabur/variant/main/explorer
+    type: APIReference
+    note: Public Apollo Explorer; canonical SDL available under Schema -> SDL.
+  - url: https://github.com/zeabur/cli
+    type: SourceCode
+    note: Official CLI is a thin client over the same GraphQL API; good reference for exact fields.
+actions:
+  graphqlSchemaPath: graphql/zeabur-schema.graphql
+  graphqlMarkdownPath: graphql/zeabur-graphql.md
+  openapiOmitted: true
+  apisYmlUpdated: true
+  reason: |
+    Zeabur is GraphQL-first with a documented graphql-ws WebSocket subscription
+    surface. The primary specs are the hand-authored GraphQL SDL and markdown;
+    no OpenAPI was created because no REST surface is documented (honest
+    omission). The apis.yml models the logical surfaces (Projects, Services,
+    Deployments, Environment Variables, Domains, Templates/Regions) as separate
+    api entries that all point at the shared GraphQL artifacts.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

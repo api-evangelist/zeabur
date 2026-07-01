@@ -1,0 +1,104 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Zeabur
+providerId: zeabur
+created: '2026-07-01'
+modified: '2026-07-01'
+reconciled: false
+tags:
+- PaaS
+- Deployment
+- Cloud
+- DevOps
+- GraphQL
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Zeabur spend. Zeabur bills a flat monthly subscription
+  (Developer / Team) plus usage-based platform resources: compute (vCPU-hours),
+  memory (GB-hours), and network egress (bandwidth GB). Costs accrue per
+  running service across projects and environments. The public GraphQL API is
+  not separately metered; it is the control plane through which resources are
+  provisioned, scaled, suspended, and torn down.
+notes: >-
+  Per-resource rates are usage-based and subject to change; verify against the
+  Zeabur pricing page during reconciliation. Suspending idle services and
+  right-sizing compute/memory are the primary optimization levers.
+sources:
+- https://zeabur.com/pricing
+- https://zeabur.com/docs
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Zeabur
+serviceCategory: Compute
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Zeabur
+  ServiceCategory: Compute
+  ProviderName: Zeabur
+  PublisherName: Zeabur
+  InvoiceIssuerName: Zeabur
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: subscription_fee
+  description: Flat monthly plan fee (Developer / Team) charged per account or team.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: compute_vcpu_hours
+  description: vCPU-hours consumed by running services, billed by usage.
+  unit: vcpu_hours
+  aggregation: sum
+  dimensions:
+  - account
+  - project
+  - service
+  - environment
+- name: memory_gb_hours
+  description: Memory GB-hours consumed by running services, billed by usage.
+  unit: gb_hours
+  aggregation: sum
+  dimensions:
+  - account
+  - project
+  - service
+  - environment
+- name: bandwidth_gb
+  description: Network egress in GB served from deployed services.
+  unit: gb
+  aggregation: sum
+  dimensions:
+  - account
+  - project
+  - service
+  - environment
+principles:
+- name: Visibility
+  description: Pull Zeabur usage/billing detail; attribute compute, memory, and bandwidth spend per project, service, and environment.
+- name: Allocation
+  description: Organize workloads into projects and environments (production/staging) and, on Team plans, per team to map spend to owners.
+- name: Optimization
+  description: Suspend idle services, right-size compute/memory, consolidate low-traffic services, and reduce egress with caching/CDN in front of high-bandwidth services.
+- name: Accountability
+  description: Assign project/environment owners and review monthly resource burn against budget; use the GraphQL API to automate suspend/scale actions.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

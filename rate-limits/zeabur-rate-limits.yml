@@ -1,0 +1,70 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Zeabur
+providerId: zeabur
+created: '2026-07-01'
+modified: '2026-07-01'
+reconciled: false
+tags:
+- PaaS
+- Deployment
+- Cloud
+- DevOps
+- GraphQL
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Zeabur's public GraphQL API (https://api.zeabur.com/graphql) is authenticated
+  per API key with Bearer tokens. Zeabur does not publish specific numeric
+  request-per-minute limits for the GraphQL API in its documentation; abusive
+  or excessive request volume may be throttled. Practical throughput is also
+  bounded by plan-level resource quotas (compute, memory, bandwidth, number of
+  projects/services) rather than by a documented API call ceiling. GraphQL
+  subscriptions run over a WebSocket connection (wss://api.zeabur.com/graphql)
+  using the graphql-ws protocol.
+notes: >-
+  No explicit per-minute API rate-limit values are documented by Zeabur as of
+  the creation date. Verify any published limits in the Zeabur developer docs
+  and Apollo Explorer at reconciliation. Treat HTTP 429 as the throttle signal
+  and back off.
+sources:
+- https://zeabur.com/docs/developer/public-api
+- https://zeabur.com/docs/developer/use-api-key
+- https://zeabur.com/docs/developer/websocket-guide
+responseCodes:
+  throttled: 429
+limits:
+- name: GraphQL Requests
+  scope: api_key
+  metric: requests
+  limit: see provider documentation
+  notes: >-
+    No documented per-minute numeric limit; excessive volume may be throttled.
+    Requests are authenticated per API key with a Bearer token.
+- name: Plan Resource Quotas
+  scope: account
+  metric: resources
+  limit: plan-dependent
+  notes: >-
+    Compute (vCPU), memory, bandwidth, and project/service counts are bounded
+    by the subscribed plan (Free Trial / Developer / Team) rather than by an
+    API call ceiling.
+- name: WebSocket Subscriptions
+  scope: api_key
+  metric: connections
+  limit: see provider documentation
+  notes: >-
+    Real-time build/runtime log subscriptions use graphql-ws over
+    wss://api.zeabur.com/graphql; connection limits are not documented.
+policies:
+- name: Bearer Authentication
+  description: Every request must carry an Authorization Bearer API token; revoked keys are rejected immediately.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on HTTP 429 and honor any Retry-After header.
+- name: Resource-Bound Throughput
+  description: Effective usage is governed by plan resource quotas; upgrade the plan to raise compute/bandwidth ceilings.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

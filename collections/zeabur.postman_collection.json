@@ -1,0 +1,408 @@
+{
+  "item": [
+    {
+      "id": "b1a1e001-0000-4000-8000-000000000001",
+      "name": "Projects",
+      "description": {
+        "content": "Project and environment operations over the Zeabur GraphQL API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000010",
+          "name": "List projects",
+          "request": {
+            "name": "List projects",
+            "description": {
+              "content": "GraphQL query listing projects for the authenticated owner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query ListProjects($limit: Int) { projects(limit: $limit) { edges { node { _id name region { id name } } } pageInfo { hasNextPage endCursor } } }\",\n  \"variables\": { \"limit\": 20 }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000011",
+          "name": "Create project",
+          "request": {
+            "name": "Create project",
+            "description": {
+              "content": "GraphQL mutation creating a project in a region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation CreateProject($region: String!, $name: String!) { createProject(region: $region, name: $name) { _id name } }\",\n  \"variables\": { \"region\": \"sfo1\", \"name\": \"my-project\" }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b1a1e001-0000-4000-8000-000000000002",
+      "name": "Services",
+      "description": {
+        "content": "Service lifecycle operations over the Zeabur GraphQL API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000020",
+          "name": "Create service from git",
+          "request": {
+            "name": "Create service from git",
+            "description": {
+              "content": "GraphQL mutation creating a service from a git repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation CreateService($projectID: ObjectID!, $name: String!, $repoID: Int!, $branchName: String!) { createService(projectID: $projectID, name: $name, repoID: $repoID, branchName: $branchName) { _id name template } }\",\n  \"variables\": { \"projectID\": \"<PROJECT_ID>\", \"name\": \"api\", \"repoID\": 123456, \"branchName\": \"main\" }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000021",
+          "name": "Redeploy service",
+          "request": {
+            "name": "Redeploy service",
+            "description": {
+              "content": "GraphQL mutation redeploying a service in an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation Redeploy($id: ObjectID!, $environmentID: ObjectID!) { redeployService(id: $id, environmentID: $environmentID) { _id status } }\",\n  \"variables\": { \"id\": \"<SERVICE_ID>\", \"environmentID\": \"<ENV_ID>\" }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b1a1e001-0000-4000-8000-000000000003",
+      "name": "Deployments",
+      "description": {
+        "content": "Deployment inspection over the Zeabur GraphQL API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000030",
+          "name": "List deployments",
+          "request": {
+            "name": "List deployments",
+            "description": {
+              "content": "GraphQL query listing deployments for a service and environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query Deployments($serviceID: ObjectID!, $environmentID: ObjectID!) { deployments(serviceID: $serviceID, environmentID: $environmentID) { edges { node { _id status createdAt } } } }\",\n  \"variables\": { \"serviceID\": \"<SERVICE_ID>\", \"environmentID\": \"<ENV_ID>\" }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b1a1e001-0000-4000-8000-000000000004",
+      "name": "Environment Variables",
+      "description": {
+        "content": "Environment variable operations over the Zeabur GraphQL API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000040",
+          "name": "Update variables",
+          "request": {
+            "name": "Update variables",
+            "description": {
+              "content": "GraphQL mutation setting environment variables for a service.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation UpdateVariables($serviceID: ObjectID!, $environmentID: ObjectID!, $data: [VariableInput!]!) { updateVariables(serviceID: $serviceID, environmentID: $environmentID, data: $data) { key value } }\",\n  \"variables\": { \"serviceID\": \"<SERVICE_ID>\", \"environmentID\": \"<ENV_ID>\", \"data\": [ { \"key\": \"NODE_ENV\", \"value\": \"production\" } ] }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b1a1e001-0000-4000-8000-000000000005",
+      "name": "Domains",
+      "description": {
+        "content": "Domain binding operations over the Zeabur GraphQL API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000050",
+          "name": "Add domain",
+          "request": {
+            "name": "Add domain",
+            "description": {
+              "content": "GraphQL mutation binding a custom domain to a service.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation AddDomain($serviceID: ObjectID!, $environmentID: ObjectID!, $domain: String!) { addDomain(serviceID: $serviceID, environmentID: $environmentID, isGenerated: false, domain: $domain) { _id domain status } }\",\n  \"variables\": { \"serviceID\": \"<SERVICE_ID>\", \"environmentID\": \"<ENV_ID>\", \"domain\": \"app.example.com\" }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b1a1e001-0000-4000-8000-000000000006",
+      "name": "Templates",
+      "description": {
+        "content": "Template and region operations over the Zeabur GraphQL API.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b1a1e001-0000-4000-8000-000000000060",
+          "name": "Deploy template",
+          "request": {
+            "name": "Deploy template",
+            "description": {
+              "content": "GraphQL mutation deploying a template spec into a project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation DeployTemplate($rawSpecYaml: String!, $projectID: ObjectID) { deployTemplate(rawSpecYaml: $rawSpecYaml, projectID: $projectID) { _id name } }\",\n  \"variables\": { \"rawSpecYaml\": \"<TEMPLATE_YAML>\", \"projectID\": \"<PROJECT_ID>\" }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.zeabur.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b1a1e001-0000-4000-8000-00000000abcd",
+    "name": "Zeabur GraphQL API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "GraphQL POST examples for the Zeabur public API at https://api.zeabur.com/graphql. Authenticate with Authorization: Bearer {API_TOKEN}.\n\nDocs: https://zeabur.com/docs/developer/public-api",
+      "type": "text/plain"
+    }
+  }
+}
