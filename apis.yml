@@ -132,6 +132,10 @@ apis:
     create and update custom templates from spec YAML, and enumerate available deploy
     regions (including generic bring-your-own-server regions).
 common:
+- type: TrustCenter
+  url: security/zeabur-trust-center.yml
+- type: DomainSecurity
+  url: security/zeabur-domain-security.yml
 - type: GitHubOrganization
   url: https://github.com/zeabur
 - type: LinkedIn
@@ -146,6 +150,8 @@ common:
   url: rate-limits/zeabur-rate-limits.yml
 - type: FinOps
   url: finops/zeabur-finops.yml
+- type: Blog
+  url: https://zeabur.com/blogs
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
