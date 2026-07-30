@@ -6,7 +6,19 @@ description: Zeabur is a deploy-anything cloud platform (PaaS) that ships applic
   databases, and services with one click. Its public API is GraphQL-first, exposing
   projects, environments, services, deployments, environment variables, domains, regions,
   and templates through a single endpoint at https://api.zeabur.com/graphql.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: true
+  try_now: false
+  public: false
+  label: Freemium (free trial)
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/zeabur.png
 tags:
 - PaaS
 - Deployment
