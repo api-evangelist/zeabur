@@ -20,6 +20,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/zeabur.png
 tags:
+- Platform-as-a-Service
+- Deployment
+- Cloud
+- DevOps
+- GraphQL
+tags_raw:
 - PaaS
 - Deployment
 - Cloud
@@ -32,6 +38,10 @@ apis:
 - aid: zeabur:zeabur-projects-api
   name: Zeabur Projects API
   tags:
+  - Project
+  - Environments
+  - GraphQL
+  tags_raw:
   - Projects
   - Environments
   - GraphQL
@@ -70,6 +80,10 @@ apis:
 - aid: zeabur:zeabur-deployments-api
   name: Zeabur Deployments API
   tags:
+  - Deployment
+  - Builds
+  - Logs
+  tags_raw:
   - Deployments
   - Builds
   - Logs
