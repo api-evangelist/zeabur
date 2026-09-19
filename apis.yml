@@ -50,7 +50,7 @@ apis:
   name: Zeabur Projects API
   tags:
   - Project
-  - Environments
+  - Environment
   - GraphQL
   tags_raw:
   - Projects
