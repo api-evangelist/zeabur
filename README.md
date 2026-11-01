@@ -1,4 +1,4 @@
-# Zeabur (zeabur)
+# Zeabur
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,164 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Zeabur is a deploy-anything cloud platform (PaaS) that ships applications, databases, and services with one click. Its public API is GraphQL-first, exposing projects, environments, services, deployments, environment variables, domains, regions, and templates through a single endpoint at `https://api.zeabur.com/graphql`.
+Zeabur is a deploy-anything cloud platform (PaaS) that ships applications, databases, and services with one click. Its public API is GraphQL-first, exposing projects, environments, services, deployments, environment variables, domains, regions, and templates through a single endpoint at https://api.zeabur.com/graphql.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/zeabur/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/zeabur/refs/heads/main/apis.yml)
+**Areas:** Platform-as-a-Service · Deployment · Cloud · DevOps · GraphQL
 
-## Tags
+## Zeabur on APIs.io
 
-- PaaS
-- Deployment
-- Cloud
-- DevOps
-- GraphQL
+Everything profiled for Zeabur is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/zeabur/](https://apis.io/providers/zeabur/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (6)
 
-- **Created:** 2026-07-01
-- **Modified:** 2026-07-01
+- [Zeabur Projects API](https://apis.io/apis/zeabur/zeabur-projects-api/) — Create, list, clone, export, and delete projects, and manage the environments (production, staging, etc.) within each project, via GraphQL queries and…
+- [Zeabur Services API](https://apis.io/apis/zeabur/zeabur-services-api/) — Create services from git repositories, uploaded zips, Dockerfiles, or prebuilt marketplace codes; restart, suspend, redeploy, update image tags, read…
+- [Zeabur Deployments API](https://apis.io/apis/zeabur/zeabur-deployments-api/) — List and inspect deployments for a service and environment, fetch the latest deployment, read build and runtime logs, and stream logs in real time via…
+- [Zeabur Environment Variables API](https://apis.io/apis/zeabur/zeabur-environment-variables-api/) — List and update environment variables scoped to a service within an environment, for injecting configuration and secrets into deployed workloads.
+- [Zeabur Domains API](https://apis.io/apis/zeabur/zeabur-domains-api/) — Bind generated (*.zeabur.app) or custom domains to a service, list bound domains, check domain availability, and remove domain bindings.
+- [Zeabur Templates & Regions API](https://apis.io/apis/zeabur/zeabur-templates-api/) — List and retrieve deploy templates, deploy a template spec into a project, create and update custom templates from spec YAML, and enumerate available deploy…
 
-## APIs
+### Published properties
 
-### Zeabur Projects API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create, list, clone, export, and delete projects, and manage the environments (production, staging, etc.) within each project, via GraphQL queries and mutations.
+#### GraphQL (1)
 
-- **Human URL:** [https://zeabur.com/docs/developer/public-api](https://zeabur.com/docs/developer/public-api)
-- **Base URL:** `https://api.zeabur.com/graphql`
+GraphQL schemas.
 
-#### Tags
+- [Zeabur GraphQL API](https://apis.io/graphqls/zeabur/zeabur-graphql/)
 
-- Projects
-- Environments
-- GraphQL
+#### Collections (1)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://zeabur.com/docs/developer/public-api)
-- [GraphQL](graphql/zeabur-graphql.md)
-- [GraphQL Schema](graphql/zeabur-schema.graphql)
-- [Postman Collection](collections/zeabur.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/zeabur.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Zeabur GraphQL API](https://apis.io/collections/zeabur/open-zeabur/)
 
-### Zeabur Services API
+#### Security (2)
 
-Create services from git repositories, uploaded zips, Dockerfiles, or prebuilt marketplace codes; restart, suspend, redeploy, update image tags, read metrics/ports, and run commands inside running services.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://zeabur.com/docs/developer/public-api](https://zeabur.com/docs/developer/public-api)
-- **Base URL:** `https://api.zeabur.com/graphql`
+- [Zeabur Domain Security](https://apis.io/security/zeabur/zeabur-domain-security/)
+- [Zeabur Trust Center](https://apis.io/security/zeabur/zeabur-trust-center/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Services
-- Git
-- Docker
-- Marketplace
+Published plans, tiers and prices.
 
-#### Properties
+- [Zeabur Plans Pricing](https://apis.io/plans/zeabur/zeabur-plans-pricing/)
 
-- [Documentation](https://zeabur.com/docs/developer/public-api)
-- [GraphQL](graphql/zeabur-graphql.md)
-- [GraphQL Schema](graphql/zeabur-schema.graphql)
-- [Postman Collection](collections/zeabur.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/zeabur.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Zeabur Deployments API
+Published request limits.
 
-List and inspect deployments for a service and environment, fetch the latest deployment, read build and runtime logs, and stream logs in real time via graphql-ws subscriptions.
+- [Zeabur Rate Limits](https://apis.io/rate-limits/zeabur/zeabur-rate-limits/)
 
-- **Human URL:** [https://zeabur.com/docs/developer/public-api](https://zeabur.com/docs/developer/public-api)
-- **Base URL:** `https://api.zeabur.com/graphql`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Deployments
-- Builds
-- Logs
+- [Zeabur Finops](https://apis.io/finops/zeabur/zeabur-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://zeabur.com/docs/developer/public-api)
-- [Documentation](https://zeabur.com/docs/developer/websocket-guide)
-- [GraphQL](graphql/zeabur-graphql.md)
-- [GraphQL Schema](graphql/zeabur-schema.graphql)
-- [Postman Collection](collections/zeabur.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/zeabur.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Zeabur Environment Variables API
-
-List and update environment variables scoped to a service within an environment, for injecting configuration and secrets into deployed workloads.
-
-- **Human URL:** [https://zeabur.com/docs/developer/public-api](https://zeabur.com/docs/developer/public-api)
-- **Base URL:** `https://api.zeabur.com/graphql`
-
-#### Tags
-
-- Environment Variables
-- Configuration
-- Secrets
-
-#### Properties
-
-- [Documentation](https://zeabur.com/docs/developer/public-api)
-- [GraphQL](graphql/zeabur-graphql.md)
-- [GraphQL Schema](graphql/zeabur-schema.graphql)
-- [Postman Collection](collections/zeabur.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/zeabur.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Zeabur Domains API
-
-Bind generated (*.zeabur.app) or custom domains to a service, list bound domains, check domain availability, and remove domain bindings.
-
-- **Human URL:** [https://zeabur.com/docs/developer/public-api](https://zeabur.com/docs/developer/public-api)
-- **Base URL:** `https://api.zeabur.com/graphql`
-
-#### Tags
-
-- Domains
-- DNS
-- Networking
-
-#### Properties
-
-- [Documentation](https://zeabur.com/docs/developer/public-api)
-- [GraphQL](graphql/zeabur-graphql.md)
-- [GraphQL Schema](graphql/zeabur-schema.graphql)
-- [Postman Collection](collections/zeabur.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/zeabur.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Zeabur Templates & Regions API
-
-List and retrieve deploy templates, deploy a template spec into a project, create and update custom templates from spec YAML, and enumerate available deploy regions (including generic bring-your-own-server regions).
-
-- **Human URL:** [https://zeabur.com/docs/developer/public-api](https://zeabur.com/docs/developer/public-api)
-- **Base URL:** `https://api.zeabur.com/graphql`
-
-#### Tags
-
-- Templates
-- Marketplace
-- Regions
-
-#### Properties
-
-- [Documentation](https://zeabur.com/docs/developer/public-api)
-- [GraphQL](graphql/zeabur-graphql.md)
-- [GraphQL Schema](graphql/zeabur-schema.graphql)
-- [Postman Collection](collections/zeabur.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/zeabur.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/zeabur)
-- [LinkedIn](https://www.linkedin.com/company/zeabur)
 - [Website](https://zeabur.com/)
 - [Documentation](https://zeabur.com/docs)
-- [Plans](plans/zeabur-plans-pricing.yml)
-- [Rate Limits](rate-limits/zeabur-rate-limits.yml)
-- [Fin Ops](finops/zeabur-finops.yml)
+- [Blog](https://zeabur.com/blogs)
+- [GitHub](https://github.com/zeabur)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 22.2** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 35.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 11.9 |
+| Access clarity | 15.8 |
+
+**Agent readiness 13.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/zeabur/](https://apis.io/providers/zeabur/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Zeabur: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/zeabur/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
